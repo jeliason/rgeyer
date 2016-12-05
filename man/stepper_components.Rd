@@ -4,7 +4,7 @@
 \alias{stepper_components}
 \title{Compute the components of papangelou for the stepper model}
 \usage{
-stepper_components(from, to, R, K, r, bbox, dbg = 0, toroidal = 0)
+stepper_components(from, to, R, K, r, sat, bbox, dbg = 0, toroidal = 0)
 }
 \arguments{
 \item{from}{coordinates of the data}
@@ -16,6 +16,8 @@ stepper_components(from, to, R, K, r, bbox, dbg = 0, toroidal = 0)
 \item{K}{the number of steps}
 
 \item{r}{alternative to K and R, the r vector itself. Increasing, 0 shouldn't be included.}
+
+\item{sat}{the saturation levels, >0 integers.}
 
 \item{bbox}{bounding box}
 

@@ -16,6 +16,7 @@ NumericVector rstepper_log_papangelou_c(
                                     NumericMatrix to,
                                     NumericVector theta,
                                     NumericVector r,
+                                    NumericVector sat,
                                     NumericMatrix bbox,
                                     int dbg,
                                     int toroidal) {
@@ -57,7 +58,7 @@ NumericVector rstepper_log_papangelou_c(
   for(i=0; i < x.size(); i++){
     pot += theta[0];
     for(k=0; k < K; k++) {
-      pot += theta[k+1] * graphs.has_neighbours_i_in_graph_k(k, i);
+      pot += theta[k+1] * imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,i));
     }
   }
 
@@ -75,7 +76,7 @@ NumericVector rstepper_log_papangelou_c(
     for(j=0; j < x.size(); j++){
       newpot += theta[0];
       for(k=0; k < K; k++) {
-        newpot += theta[k+1] * graphs.has_neighbours_i_in_graph_k(k, j);
+        newpot += theta[k+1] * imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,j));
       }
     }
     change = newpot - pot;

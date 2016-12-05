@@ -28,7 +28,7 @@ out <-  rstepper_log_papangelou_c(
 M <- matrix(out, ncol=length(xs))
 
 
-out2 <- stepper_log_papangelou(xy, grid, theta, R, K, bbox, toroidal = toroidal)
+out2 <- stepper_log_papangelou(xy, grid, theta, r, bbox, toroidal = toroidal)
 M2 <- matrix(out2, ncol=length(xs))
 
 par(mfrow=c(2,1))

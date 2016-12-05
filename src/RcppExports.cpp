@@ -5,6 +5,61 @@
 
 using namespace Rcpp;
 
+// rrelativestepper_m3_univ_c
+NumericMatrix rrelativestepper_m3_univ_c(NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal, List trend_im);
+RcppExport SEXP rgeyer_rrelativestepper_m3_univ_c(SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP, SEXP trend_imSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
+    Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
+    Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
+    Rcpp::traits::input_parameter< List >::type trend_im(trend_imSEXP);
+    __result = Rcpp::wrap(rrelativestepper_m3_univ_c(theta, r, bbox, iter, x0, dbg, toroidal, trend_im));
+    return __result;
+END_RCPP
+}
+// rrelativestepper_univ_c
+NumericMatrix rrelativestepper_univ_c(NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal, List trend_im);
+RcppExport SEXP rgeyer_rrelativestepper_univ_c(SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP, SEXP trend_imSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
+    Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
+    Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
+    Rcpp::traits::input_parameter< List >::type trend_im(trend_imSEXP);
+    __result = Rcpp::wrap(rrelativestepper_univ_c(theta, r, bbox, iter, x0, dbg, toroidal, trend_im));
+    return __result;
+END_RCPP
+}
+// rrelativestepper_univ_fixed_c
+NumericMatrix rrelativestepper_univ_fixed_c(NumericVector n, NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal, List trend_im);
+RcppExport SEXP rgeyer_rrelativestepper_univ_fixed_c(SEXP nSEXP, SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP, SEXP trend_imSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< NumericVector >::type n(nSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
+    Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
+    Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
+    Rcpp::traits::input_parameter< List >::type trend_im(trend_imSEXP);
+    __result = Rcpp::wrap(rrelativestepper_univ_fixed_c(n, theta, r, bbox, iter, x0, dbg, toroidal, trend_im));
+    return __result;
+END_RCPP
+}
 // rstepper_biv_c
 NumericMatrix rstepper_biv_c(NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal);
 RcppExport SEXP rgeyer_rstepper_biv_c(SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
@@ -60,39 +115,41 @@ BEGIN_RCPP
 END_RCPP
 }
 // rstepper_univ_c
-NumericMatrix rstepper_univ_c(NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal, List trend_im);
-RcppExport SEXP rgeyer_rstepper_univ_c(SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP, SEXP trend_imSEXP) {
+NumericMatrix rstepper_univ_c(NumericVector theta, NumericVector r, IntegerVector sat, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal, List trend_im);
+RcppExport SEXP rgeyer_rstepper_univ_c(SEXP thetaSEXP, SEXP rSEXP, SEXP satSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP, SEXP trend_imSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type sat(satSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
     Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type x0(x0SEXP);
     Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
     Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
     Rcpp::traits::input_parameter< List >::type trend_im(trend_imSEXP);
-    __result = Rcpp::wrap(rstepper_univ_c(theta, r, bbox, iter, x0, dbg, toroidal, trend_im));
+    __result = Rcpp::wrap(rstepper_univ_c(theta, r, sat, bbox, iter, x0, dbg, toroidal, trend_im));
     return __result;
 END_RCPP
 }
 // rstepper_univ_fixed_c
-NumericMatrix rstepper_univ_fixed_c(NumericVector n, NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal, List trend_im);
-RcppExport SEXP rgeyer_rstepper_univ_fixed_c(SEXP nSEXP, SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP, SEXP trend_imSEXP) {
+NumericMatrix rstepper_univ_fixed_c(NumericVector n, NumericVector theta, NumericVector r, IntegerVector sat, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal, List trend_im);
+RcppExport SEXP rgeyer_rstepper_univ_fixed_c(SEXP nSEXP, SEXP thetaSEXP, SEXP rSEXP, SEXP satSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP, SEXP trend_imSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericVector >::type n(nSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type sat(satSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
     Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type x0(x0SEXP);
     Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
     Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
     Rcpp::traits::input_parameter< List >::type trend_im(trend_imSEXP);
-    __result = Rcpp::wrap(rstepper_univ_fixed_c(n, theta, r, bbox, iter, x0, dbg, toroidal, trend_im));
+    __result = Rcpp::wrap(rstepper_univ_fixed_c(n, theta, r, sat, bbox, iter, x0, dbg, toroidal, trend_im));
     return __result;
 END_RCPP
 }
@@ -131,70 +188,107 @@ BEGIN_RCPP
 END_RCPP
 }
 // rstepper_biv_components_c
-NumericMatrix rstepper_biv_components_c(NumericMatrix from, NumericMatrix to, NumericVector r, NumericMatrix bbox, int dbg, int toroidal);
-RcppExport SEXP rgeyer_rstepper_biv_components_c(SEXP fromSEXP, SEXP toSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
+NumericMatrix rstepper_biv_components_c(NumericMatrix from, NumericMatrix to, NumericVector r, IntegerVector sat, NumericMatrix bbox, int dbg, int toroidal);
+RcppExport SEXP rgeyer_rstepper_biv_components_c(SEXP fromSEXP, SEXP toSEXP, SEXP rSEXP, SEXP satSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericMatrix >::type from(fromSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type to(toSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type sat(satSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
     Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
     Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
-    __result = Rcpp::wrap(rstepper_biv_components_c(from, to, r, bbox, dbg, toroidal));
+    __result = Rcpp::wrap(rstepper_biv_components_c(from, to, r, sat, bbox, dbg, toroidal));
     return __result;
 END_RCPP
 }
 // rstepper_biv_components_at_data_c
-NumericMatrix rstepper_biv_components_at_data_c(NumericMatrix from, NumericVector r, NumericMatrix bbox, int dbg, int toroidal);
-RcppExport SEXP rgeyer_rstepper_biv_components_at_data_c(SEXP fromSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
+NumericMatrix rstepper_biv_components_at_data_c(NumericMatrix from, NumericVector r, IntegerVector sat, NumericMatrix bbox, int dbg, int toroidal);
+RcppExport SEXP rgeyer_rstepper_biv_components_at_data_c(SEXP fromSEXP, SEXP rSEXP, SEXP satSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericMatrix >::type from(fromSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type sat(satSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
     Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
     Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
-    __result = Rcpp::wrap(rstepper_biv_components_at_data_c(from, r, bbox, dbg, toroidal));
+    __result = Rcpp::wrap(rstepper_biv_components_at_data_c(from, r, sat, bbox, dbg, toroidal));
     return __result;
 END_RCPP
 }
 // rstepper_components_c
-NumericMatrix rstepper_components_c(NumericMatrix from, NumericMatrix to, NumericVector r, NumericMatrix bbox, int dbg, int toroidal);
-RcppExport SEXP rgeyer_rstepper_components_c(SEXP fromSEXP, SEXP toSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
+NumericMatrix rstepper_components_c(NumericMatrix from, NumericMatrix to, NumericVector r, IntegerVector sat, NumericMatrix bbox, int dbg, int toroidal);
+RcppExport SEXP rgeyer_rstepper_components_c(SEXP fromSEXP, SEXP toSEXP, SEXP rSEXP, SEXP satSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericMatrix >::type from(fromSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type to(toSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type sat(satSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
     Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
     Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
-    __result = Rcpp::wrap(rstepper_components_c(from, to, r, bbox, dbg, toroidal));
+    __result = Rcpp::wrap(rstepper_components_c(from, to, r, sat, bbox, dbg, toroidal));
     return __result;
 END_RCPP
 }
 // rstepper_components_at_data_c
-NumericMatrix rstepper_components_at_data_c(NumericMatrix from, NumericVector r, NumericMatrix bbox, int dbg, int toroidal);
-RcppExport SEXP rgeyer_rstepper_components_at_data_c(SEXP fromSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
+NumericMatrix rstepper_components_at_data_c(NumericMatrix from, NumericVector r, IntegerVector sat, NumericMatrix bbox, int dbg, int toroidal);
+RcppExport SEXP rgeyer_rstepper_components_at_data_c(SEXP fromSEXP, SEXP rSEXP, SEXP satSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
     Rcpp::traits::input_parameter< NumericMatrix >::type from(fromSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< IntegerVector >::type sat(satSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
     Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
     Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
-    __result = Rcpp::wrap(rstepper_components_at_data_c(from, r, bbox, dbg, toroidal));
+    __result = Rcpp::wrap(rstepper_components_at_data_c(from, r, sat, bbox, dbg, toroidal));
+    return __result;
+END_RCPP
+}
+// rstepper_multi_log_papangelou_c
+NumericVector rstepper_multi_log_papangelou_c(List theta1_list, List theta2_list, NumericMatrix from, NumericMatrix to, NumericMatrix bbox, int dbg, int toroidal);
+RcppExport SEXP rgeyer_rstepper_multi_log_papangelou_c(SEXP theta1_listSEXP, SEXP theta2_listSEXP, SEXP fromSEXP, SEXP toSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type theta1_list(theta1_listSEXP);
+    Rcpp::traits::input_parameter< List >::type theta2_list(theta2_listSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type from(fromSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type to(toSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
+    Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
+    Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
+    __result = Rcpp::wrap(rstepper_multi_log_papangelou_c(theta1_list, theta2_list, from, to, bbox, dbg, toroidal));
+    return __result;
+END_RCPP
+}
+// rstepper_multi_log_papangelou_at_data_c
+NumericVector rstepper_multi_log_papangelou_at_data_c(List theta1_list, List theta2_list, NumericMatrix from, NumericMatrix bbox, int dbg, int toroidal);
+RcppExport SEXP rgeyer_rstepper_multi_log_papangelou_at_data_c(SEXP theta1_listSEXP, SEXP theta2_listSEXP, SEXP fromSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject __result;
+    Rcpp::RNGScope __rngScope;
+    Rcpp::traits::input_parameter< List >::type theta1_list(theta1_listSEXP);
+    Rcpp::traits::input_parameter< List >::type theta2_list(theta2_listSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type from(fromSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
+    Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
+    Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
+    __result = Rcpp::wrap(rstepper_multi_log_papangelou_at_data_c(theta1_list, theta2_list, from, bbox, dbg, toroidal));
     return __result;
 END_RCPP
 }
 // rstepper_log_papangelou_c
-NumericVector rstepper_log_papangelou_c(NumericMatrix from, NumericMatrix to, NumericVector theta, NumericVector r, NumericMatrix bbox, int dbg, int toroidal);
-RcppExport SEXP rgeyer_rstepper_log_papangelou_c(SEXP fromSEXP, SEXP toSEXP, SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
+NumericVector rstepper_log_papangelou_c(NumericMatrix from, NumericMatrix to, NumericVector theta, NumericVector r, NumericVector sat, NumericMatrix bbox, int dbg, int toroidal);
+RcppExport SEXP rgeyer_rstepper_log_papangelou_c(SEXP fromSEXP, SEXP toSEXP, SEXP thetaSEXP, SEXP rSEXP, SEXP satSEXP, SEXP bboxSEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
 BEGIN_RCPP
     Rcpp::RObject __result;
     Rcpp::RNGScope __rngScope;
@@ -202,10 +296,11 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type to(toSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type sat(satSEXP);
     Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
     Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
     Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
-    __result = Rcpp::wrap(rstepper_log_papangelou_c(from, to, theta, r, bbox, dbg, toroidal));
+    __result = Rcpp::wrap(rstepper_log_papangelou_c(from, to, theta, r, sat, bbox, dbg, toroidal));
     return __result;
 END_RCPP
 }

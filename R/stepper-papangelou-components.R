@@ -5,6 +5,7 @@
 #' @param K the number of steps
 #' @param R maximum range
 #' @param r alternative to K and R, the r vector itself. Increasing, 0 shouldn't be included.
+#' @param sat the saturation levels, >0 integers.
 #' @param bbox bounding box
 #' @param dbg dbg level
 #' @param toroidal >0 use toroidal distances
@@ -16,12 +17,13 @@
 #' @export
 #' @useDynLib rgeyer
 
-stepper_components <- function(from, to, R, K, r, bbox, dbg=0, toroidal=0){
+stepper_components <- function(from, to, R, K, r, sat, bbox, dbg=0, toroidal=0){
   if(missing(r)) r <- (1:K) * R /K
   if(is.null(to) | missing(to)){
     rstepper_components_at_data_c(
       from,
       r,
+      sat,
       bbox,
       dbg,
       toroidal)
@@ -31,6 +33,7 @@ stepper_components <- function(from, to, R, K, r, bbox, dbg=0, toroidal=0){
     from,
     to,
     r,
+    sat,
     bbox,
     dbg,
     toroidal)

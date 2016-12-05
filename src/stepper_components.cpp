@@ -15,6 +15,7 @@ NumericMatrix rstepper_components_c(
                                     NumericMatrix from,
                                     NumericMatrix to,
                                     NumericVector r,
+                                    IntegerVector sat,
                                     NumericMatrix bbox,
                                     int dbg,
                                     int toroidal) {
@@ -57,7 +58,7 @@ NumericMatrix rstepper_components_c(
 
   for(j = 0; j < x.size(); j++)
     for(k = 0; k < K; k++)
-      original_factors(j, k) = graphs.has_neighbours_i_in_graph_k(k, j);
+      original_factors(j, k) = imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,j) );
 
   /* here begins the evaluation */
 
@@ -72,9 +73,9 @@ NumericMatrix rstepper_components_c(
     graphs.update_edges_after_addition();
 
     for(k = 0; k < K; k++) {
-      change = graphs.has_neighbours_i_in_graph_k(k, l); // the new point
+      change = imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,l)); // the new point
       for(j = 0; j < l; j++) { // and others
-        change += graphs.has_neighbours_i_in_graph_k(k, j) - original_factors(j, k);
+        change += imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,j)) - original_factors(j, k);
       }
       components(i,k) = change;
     }
@@ -101,6 +102,7 @@ NumericMatrix rstepper_components_c(
 NumericMatrix rstepper_components_at_data_c(
     NumericMatrix from,
     NumericVector r,
+    IntegerVector sat,
     NumericMatrix bbox,
     int dbg,
     int toroidal) {
@@ -143,16 +145,18 @@ NumericMatrix rstepper_components_at_data_c(
 
   for(j = 0; j < x.size(); j++)
     for(k = 0; k < K; k++)
-      original_factors(j, k) = graphs.has_neighbours_i_in_graph_k(k, j);
+      original_factors(j, k) = imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,j));//graphs.has_neighbours_i_in_graph_k(k, j);
 
   /* here begins the evaluation */
-
+  int counts_ij;
   // the main loop
   for(i = 0; i < from.nrow(); i++ ) {
     for(k = 0; k < K; k++) {
-      change = -graphs.has_neighbours_i_in_graph_k(k, i); // the old point
-      for(j = 0; j < graphs.neighbour_count_of_i_in_graph_k(k, i); j++) { // check if the point is the only neighbour
-        if(graphs.neighbour_count_of_neighbour_j_of_i_in_graph_k(k, i, j) == 1) change--;
+      change = -imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,i));//-graphs.has_neighbours_i_in_graph_k(k, i); // the old point
+      for(j = 0; j < graphs.neighbour_count_of_i_in_graph_k(k, i); j++) { // check if the removal of this point makes a difference
+        // count should be between 0<count<=sat to make a difference
+        counts_ij = graphs.neighbour_count_of_neighbour_j_of_i_in_graph_k(k, i, j);
+        if(counts_ij > 0 & counts_ij <= sat(k)) change--;
       }
       components(i,k) = change;
     }

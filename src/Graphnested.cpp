@@ -77,7 +77,6 @@ void Graphnested::update_edges_after_addition(){
 
   // add to nodelists
   for(k = 0; k < r.size(); k++) nodes.at(k).push_back(new Node());
-
   // check the relations
   for(j = 0; j < i; j++) if(pair_suitable(i,j)) { // go through the old points
     d = x->getDist(&i, &j);

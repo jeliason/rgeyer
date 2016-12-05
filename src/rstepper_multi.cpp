@@ -8,11 +8,6 @@
 #include "Image.h"
 using namespace Rcpp;
 
-double imin(int i, int j){
-  if(i < j) return 1.0*i;
-  return 1.0*j;
-}
-
 void print_input_parameters(std::vector<std::vector<double > > * ranges1,
                             std::vector<std::vector<double > > * ranges2,
                             std::vector<std::vector<double > > * thetas1,
@@ -83,35 +78,35 @@ void print_input_parameters(std::vector<std::vector<double > > * ranges1,
 }
 
 
-double potential_multi(Pplite *x, NumericVector theta0,
-                       std::vector<std::vector<double > > * thetas1,
-                       std::vector<std::vector<double > > * thetas2,
-                       std::vector<std::vector<int > > * saturations1,
-                       std::vector<std::vector<int > > * saturations2,
-                       std::vector<Graphnested *> *graphs1,
-                       std::vector<Graphnested *> *graphs2
-){
-  int i, k, t;
-  double pot = 0;
-  for(i=0; i < x->size(); i++){
-    pot += theta0[x->getType(&i)];
-    // intra
-    for(t=0; t < thetas1->size(); t++) {
-      // over ranges
-      for(k = 0; k < thetas1->at(t).size(); k++)
-        //pot += thetas1->at(t).at(k) * graphs1->at(t)->has_neighbours_i_in_graph_k(k, i);
-        pot += thetas1->at(t).at(k) * imin(graphs1->at(t)->neighbour_count_of_i_in_graph_k(k,i), saturations1->at(t).at(k));
-    }
-    // inter
-    for(t=0; t < thetas2->size(); t++) {
-      // over ranges
-      for(k = 0; k < thetas2->at(t).size(); k++)
-        //pot += thetas2->at(t).at(k) * graphs2->at(t)->has_neighbours_i_in_graph_k(k, i);
-        pot += thetas2->at(t).at(k) * imin(graphs2->at(t)->neighbour_count_of_i_in_graph_k(k,i), saturations2->at(t).at(k));
-    }
-  }
-  return pot;
-}
+// double potential_multi(Pplite *x, NumericVector theta0,
+//                        std::vector<std::vector<double > > * thetas1,
+//                        std::vector<std::vector<double > > * thetas2,
+//                        std::vector<std::vector<int > > * saturations1,
+//                        std::vector<std::vector<int > > * saturations2,
+//                        std::vector<Graphnested *> *graphs1,
+//                        std::vector<Graphnested *> *graphs2
+// ){
+//   int i, k, t;
+//   double pot = 0;
+//   for(i=0; i < x->size(); i++){
+//     pot += theta0[x->getType(&i)];
+//     // intra
+//     for(t=0; t < thetas1->size(); t++) {
+//       // over ranges
+//       for(k = 0; k < thetas1->at(t).size(); k++)
+//         //pot += thetas1->at(t).at(k) * graphs1->at(t)->has_neighbours_i_in_graph_k(k, i);
+//         pot += thetas1->at(t).at(k) * imin(graphs1->at(t)->neighbour_count_of_i_in_graph_k(k,i), saturations1->at(t).at(k));
+//     }
+//     // inter
+//     for(t=0; t < thetas2->size(); t++) {
+//       // over ranges
+//       for(k = 0; k < thetas2->at(t).size(); k++)
+//         //pot += thetas2->at(t).at(k) * graphs2->at(t)->has_neighbours_i_in_graph_k(k, i);
+//         pot += thetas2->at(t).at(k) * imin(graphs2->at(t)->neighbour_count_of_i_in_graph_k(k,i), saturations2->at(t).at(k));
+//     }
+//   }
+//   return pot;
+// }
 
 
 // [[Rcpp::export]]

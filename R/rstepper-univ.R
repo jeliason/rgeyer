@@ -7,6 +7,7 @@
 #' @param R maximum intereaction
 #' @param K number of steps
 #' @param r alternative to R,K. Should be increasing, not containing 0. Length will be taken as K.
+#' @param sat saturation levels, integer vector > 0
 #' @param bbox bounding box
 #' @param iter iteration of bd
 #' @param x0 the starting pattern location matrix
@@ -21,7 +22,7 @@
 #' @import Rcpp
 #' @export
 
-rstepper <- function(theta, R, K, r, n=NULL,
+rstepper <- function(theta, R, K, r, sat, n=NULL,
                      bbox = cbind(0:1, 0:1), iter = 10,
                      x0 = NULL, toroidal = 0, dbg = 0, trend = NULL) {
   # check range vector
@@ -40,7 +41,9 @@ rstepper <- function(theta, R, K, r, n=NULL,
     fixed <- FALSE
     if((K+1) != n1 ) stop("Length of theta should be [length of r (=K) + 1] ")
   }
-
+  # check saturation
+  if(missing(sat)) stop("Saturation levels missing")
+  else if(length(sat) != K) stop("Wrong length of 'sat'.")
   # check trend
   if(!is.null(trend)){
     if(!is.im(trend)) stop("trend should be im-object")
@@ -61,8 +64,8 @@ rstepper <- function(theta, R, K, r, n=NULL,
       x0 <- apply(bbox, 2, function(a) runif(nstart, a[1], a[2]))
     }
   }
-  if(fixed) out <- rstepper_univ_fixed_c(n, theta, r, bbox, iter, x0, dbg, toroidal, trend)
-  else out <- rstepper_univ_c(theta, r, bbox, iter, x0, dbg, toroidal, trend)
+  if(fixed) out <- rstepper_univ_fixed_c(n, theta, r, sat, bbox, iter, x0, dbg, toroidal, trend)
+  else out <- rstepper_univ_c(theta, r, sat, bbox, iter, x0, dbg, toroidal, trend)
 
   out
 }

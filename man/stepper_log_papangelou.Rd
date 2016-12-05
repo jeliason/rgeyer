@@ -4,7 +4,7 @@
 \alias{stepper_log_papangelou}
 \title{Compute the papangelou conditional intensity for the stepper model}
 \usage{
-stepper_log_papangelou(from, to, theta, r, bbox, dbg = 0, toroidal = 0)
+stepper_log_papangelou(from, to, theta, r, sat, bbox, dbg = 0, toroidal = 0)
 }
 \arguments{
 \item{from}{coordinates of the data}
@@ -14,6 +14,8 @@ stepper_log_papangelou(from, to, theta, r, bbox, dbg = 0, toroidal = 0)
 \item{theta}{vector of weights, K+1 long}
 
 \item{r}{steps, increasing, does not include 0}
+
+\item{sat}{saturation level}
 
 \item{bbox}{bounding box}
 

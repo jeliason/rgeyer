@@ -4,7 +4,7 @@
 \alias{stepper_biv_components}
 \title{Compute the components of papangelou for the bivariate stepper model}
 \usage{
-stepper_biv_components(from, to, r, bbox, dbg = 0, toroidal = 0)
+stepper_biv_components(from, to, r, sat, bbox, dbg = 0, toroidal = 0)
 }
 \arguments{
 \item{from}{coordinates of the data, third column 0/1 marks}
@@ -12,6 +12,8 @@ stepper_biv_components(from, to, r, bbox, dbg = 0, toroidal = 0)
 \item{to}{coordinate matrix for locations for evaluation of papangelou. Assumed to be different from 'from'}
 
 \item{r}{alternative to K and R, the r vector itself. Increasing, 0 shouldn't be included.}
+
+\item{sat}{saturation levels, vector if integers > 0}
 
 \item{bbox}{bounding box}
 
@@ -21,7 +23,7 @@ stepper_biv_components(from, to, r, bbox, dbg = 0, toroidal = 0)
 }
 \value{
 Matrix with dimension (nrow(to), K) with
-d_k(to_i|from) = 1( ne_k(to_i, from[!mark_i])>0) with ne_k(to_i, from[!mark_i]>0) = sum_j 1(mark_j!=mark_i)(r[k-1] < ||to_i - from_j|| < r[k])
+d_k(to_i|from) = min(sat_k, ne_k(to_i, from[!mark_i])) with ne_k(to_i, from[!mark_i]) = sum_j 1(mark_j!=mark_i)(r[k-1] < ||to_i - from_j|| < r[k])
 
 If 'to' is NULL, computes the components for 'from' locations, i.e. the papangelou for each data point.
 }

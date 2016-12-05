@@ -9,18 +9,15 @@
 using namespace Rcpp;
 
 
-
-
 // [[Rcpp::export]]
-NumericMatrix rstepper_univ_c(NumericVector theta,
-                              NumericVector r,
-                              IntegerVector sat,
-                              NumericMatrix bbox,
-                              int iter,
-                              NumericMatrix x0,
-                              int dbg,
-                              int toroidal,
-                              List trend_im) {
+NumericMatrix rrelativestepper_univ_c(NumericVector theta,
+                                      NumericVector r,
+                                      NumericMatrix bbox,
+                                      int iter,
+                                      NumericMatrix x0,
+                                      int dbg,
+                                      int toroidal,
+                                      List trend_im) {
   RNGScope scope;
   int i, j, k, it;
   int b_or_d;
@@ -55,6 +52,16 @@ NumericMatrix rstepper_univ_c(NumericVector theta,
   graphs.compute_edges();
   if(dbg>10) Rprintf("ok\n");
 
+  // Annuli areas
+  std::vector<double > Ak(K); // divide by area already here
+  std::vector<int > sat(K);
+  Ak.at(0) = r.at(0) * r.at(0) * PI / Area;
+  sat.at(0) = roundup(Ak.at(0) * x.size());
+  for(i=1; i < K; i++) {
+    Ak.at(i) = (pow(r.at(i),2)-pow(r.at(i-1),2)) * PI / Area;
+    sat.at(i) = roundup(Ak.at(i) * x.size());
+  }
+
   // init trend
   Image trend(trend_im);
 
@@ -64,7 +71,7 @@ NumericMatrix rstepper_univ_c(NumericVector theta,
   for(i=0; i < x.size(); i++){
     pot += theta[0] + trend.getValue(x.getX(&i), x.getY(&i));
     for(k=0; k < K; k++) {
-      pot += theta[k+1] * imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k, i));//graphs.has_neighbours_i_in_graph_k(k, i);
+      pot += theta[k+1] * imin(sat[k], graphs.neighbour_count_of_i_in_graph_k(k, i))/ sat[k];
     }
   }
   /* here begins the simulation */
@@ -72,6 +79,7 @@ NumericMatrix rstepper_univ_c(NumericVector theta,
   // the main loop
   for(it = 0; it < iter; it++ ) {
     Rcpp::checkUserInterrupt();
+
     // flip a coin, birth or death
     if(runif(1)(0) < 0.5) { // death
       b_or_d = 1;
@@ -80,14 +88,21 @@ NumericMatrix rstepper_univ_c(NumericVector theta,
       // keep the old location
       xn = x.getX(&j);
       yn = x.getY(&j);
+      // new saturations
       // delete and compute the potential
       x.remove(&j);
+      for(k=0; k < K; k++) sat[k] = roundup(x.size() * Ak.at(k));
+      //dbg
+      // Rprintf("\n");
+      // for(k=0; k < K; k++) Rprintf("%i ", sat[k]);
+      // Rprintf("\n");
+      //
       graphs.update_edges_after_delete(&j);
       newpot = 0;
       for(i=0; i < x.size(); i++){
         newpot += theta[0] + trend.getValue(x.getX(&i), x.getY(&i));
         for(k=0; k < K; k++) {
-          newpot += theta[k+1] * imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k, i));//graphs.has_neighbours_i_in_graph_k(k, i);
+          newpot += theta[k+1] * imin(sat[k], graphs.neighbour_count_of_i_in_graph_k(k, i))/sat[k];
         }
       }
       change = newpot - pot;
@@ -112,11 +127,17 @@ NumericMatrix rstepper_univ_c(NumericVector theta,
       // add new point and compute the potential
       x.push_back(xn, yn);
       graphs.update_edges_after_addition();
+      // update saturations
+      for(k=0; k < K; k++) sat[k] = roundup(x.size() * Ak.at(k));
+      // Rprintf("\n");
+      // for(k=0; k < K; k++) Rprintf("%i ", sat[k]);
+      // Rprintf("\n");
+      // new potential
       newpot = 0;
       for(i=0; i < x.size(); i++){
         newpot += theta[0] + trend.getValue(x.getX(&i), x.getY(&i));
         for(k=0; k < K; k++) {
-          newpot += theta[k+1] * imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k, i));//graphs.has_neighbours_i_in_graph_k(k, i);
+          newpot += theta[k+1] * imin(sat[k], graphs.neighbour_count_of_i_in_graph_k(k, i))/sat[k];
         }
       }
       change = newpot - pot;
@@ -132,6 +153,8 @@ NumericMatrix rstepper_univ_c(NumericVector theta,
         graphs.update_edges_after_delete(&j);
       }
     }
+    // Rprintf("\n");
+    // for(k=0; k < K; k++) Rprintf("%i ", sat[k]);
 
     if(dbg) if(it % dbg_step == 0){
       Rprintf("       \r[%i/%i n=%i]", it+1, iter, x.size());
@@ -163,12 +186,10 @@ NumericMatrix rstepper_univ_c(NumericVector theta,
 
 
 
-
 // [[Rcpp::export]]
-NumericMatrix rstepper_univ_fixed_c(NumericVector n,
+NumericMatrix rrelativestepper_univ_fixed_c(NumericVector n,
                                     NumericVector theta,
                                     NumericVector r,
-                                    IntegerVector sat,
                                     NumericMatrix bbox,
                                     int iter,
                                     NumericMatrix x0,
@@ -209,31 +230,25 @@ NumericMatrix rstepper_univ_fixed_c(NumericVector n,
   graphs.compute_edges();
   if(dbg>10) Rprintf("ok\n");
 
-  if(dbg>10){
-    Rprintf("Parameters:\n * Ranges\n");
-    for(i=0; i < K; i++) {
-      Rprintf("%f ", rvec.at(i));
-    }
-    Rprintf("\n * Thetas\n");
-    for(i=0; i < K; i++) {
-      Rprintf("%f ", theta[i]);
-    }
-    Rprintf("\n * Saturation levels\n");
-    for(i=0; i < K; i++) {
-      Rprintf("%i ", sat[i]);
-    }
-    Rprintf("\n");
+  // Annuli areas
+  std::vector<double > Ak(K); // divide by area already here
+  std::vector<int > sat(K);
+  Ak.at(0) = r.at(0) * r.at(0) * PI / Area;
+  sat.at(0) = roundup(Ak.at(0) * x.size());
+  for(i=1; i < K; i++) {
+    Ak.at(i) = (pow(r.at(i),2)-pow(r.at(i-1),2)) * PI / Area;
+    sat.at(i) = roundup(Ak.at(i) * x.size());
   }
 
   // trend
   Image trend(trend_im);
 
+
   /* compute current potential */
   pot = 0;
   for(i=0; i < x.size(); i++){
     for(k=0; k < K; k++) {
-      //pot += theta[k] * graphs.has_neighbours_i_in_graph_k(k, i); // no intercepts here
-      pot += theta[k] * imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k, i)); // no intercepts here
+      pot += theta[k] * imin(sat[k], graphs.neighbour_count_of_i_in_graph_k(k, i))/ sat[k];
     }
   }
 
@@ -256,7 +271,8 @@ NumericMatrix rstepper_univ_fixed_c(NumericVector n,
     newpot = 0;
     for(i=0; i < x.size(); i++){
       for(k=0; k < K; k++) {
-        newpot += theta[k] * imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k, i));
+        newpot += theta[k] * imin(sat[k], graphs.neighbour_count_of_i_in_graph_k(k, i))/ sat[k];
+
       }
     }
     change = newpot - pot + (trend.getValue(xn, yn) - trend.getValue(xo,yo));
@@ -277,7 +293,7 @@ NumericMatrix rstepper_univ_fixed_c(NumericVector n,
         Rprintf("       \r[%i/%i acc %i %4.2f%%]", it, iter, acc[0], 100.0*acc[0]/it);
         if(dbg>10) Rprintf("[pot%10.3f newpot %10.3f]", pot, newpot);
         if(dbg > 1000) usleep(50000);
-    }
+      }
   }// eof mainloop
 
 

@@ -4,7 +4,7 @@
 \alias{rstepper}
 \title{Simulate the univariate Step-Geyer model}
 \usage{
-rstepper(theta, R, K, r, n = NULL, bbox = cbind(0:1, 0:1), iter = 10,
+rstepper(theta, R, K, r, sat, n = NULL, bbox = cbind(0:1, 0:1), iter = 10,
   x0 = NULL, toroidal = 0, dbg = 0, trend = NULL)
 }
 \arguments{
@@ -15,6 +15,8 @@ rstepper(theta, R, K, r, n = NULL, bbox = cbind(0:1, 0:1), iter = 10,
 \item{K}{number of steps}
 
 \item{r}{alternative to R,K. Should be increasing, not containing 0. Length will be taken as K.}
+
+\item{sat}{saturation levels, integer vector > 0}
 
 \item{n}{alternative to theta0: fixed point counts. Then theta should be K-length. see details.}
 
