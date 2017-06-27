@@ -55,13 +55,14 @@ NumericMatrix rstepper_components_c(
   NumericMatrix components(to.nrow(), K);
 
   NumericMatrix original_factors(from.nrow(), K);
-
+  // this gives the lower part components of the ratio f(X cup u)/f(X)
   for(j = 0; j < x.size(); j++)
     for(k = 0; k < K; k++)
       original_factors(j, k) = imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,j) );
 
   /* here begins the evaluation */
 
+  l = x.size(); // the index of new point is the last
   // the main loop
   for(i = 0; i < to.nrow(); i++ ) {
     // new location
@@ -69,7 +70,6 @@ NumericMatrix rstepper_components_c(
     yn = to(i,1);
     // add new point and compute the unweighted potential difference
     x.push_back(xn, yn);
-    l = x.size()-1;
     graphs.update_edges_after_addition();
 
     for(k = 0; k < K; k++) {
@@ -117,7 +117,6 @@ NumericMatrix rstepper_components_at_data_c(
   for(i=0; i < bbox.ncol(); i++) {
     win.at(2*i) = bbox(0, i);
     win.at(2*i+1) = bbox(1, i);
-    Area *= bbox(1,i) - bbox(0,i);
   }
 
   // init point pattern object
@@ -135,14 +134,14 @@ NumericMatrix rstepper_components_at_data_c(
   Graphnested graphs(&x, rvec);
   // compute the initial graph
   if(dbg>10) Rprintf(", computing edges");
-  graphs.compute_edges(); // this gives the upper part of the ratio exp(x cup X)/exp(X)
+  graphs.compute_edges();
   if(dbg>10) Rprintf("ok\n");
 
 
   NumericMatrix components(from.nrow(), K);
 
   NumericMatrix original_factors(from.nrow(), K);
-
+  // this gives the upper part of the ratio f(X)/f(X\x)
   for(j = 0; j < x.size(); j++)
     for(k = 0; k < K; k++)
       original_factors(j, k) = imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,j));//graphs.has_neighbours_i_in_graph_k(k, j);
@@ -152,13 +151,13 @@ NumericMatrix rstepper_components_at_data_c(
   // the main loop
   for(i = 0; i < from.nrow(); i++ ) {
     for(k = 0; k < K; k++) {
-      change = -imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,i));//-graphs.has_neighbours_i_in_graph_k(k, i); // the old point
+      change = 0;
       for(j = 0; j < graphs.neighbour_count_of_i_in_graph_k(k, i); j++) { // check if the removal of this point makes a difference
         // count should be between 0<count<=sat to make a difference
         counts_ij = graphs.neighbour_count_of_neighbour_j_of_i_in_graph_k(k, i, j);
-        if(counts_ij > 0 & counts_ij <= sat(k)) change--;
+        if(counts_ij > 0 & counts_ij <= sat(k)) change++;
       }
-      components(i,k) = change;
+      components(i,k) = original_factors(i,k) + change;
     }
 
     if(dbg) {

@@ -1,5 +1,7 @@
 #include <math.h>
+#include <algorithm>
 #include <vector>
+#include "helpers.h"
 #include "Graphnested.h"
 
 /********************************************************************************************/
@@ -17,6 +19,9 @@ Graphnested::Graphnested(Pplite *x, std::vector<double> r) {
     nodes.at(i) = std::vector<Node *> ( x->size() );
     for(j=0; j < x->size(); j++) nodes.at(i).at(j) = new Node();
   }
+  // max range:
+  maxR = maxv(r);
+
   // default difference:
   set_pair_suitable_method(&Graphnested::pair_suitable_no_marks);
 }
@@ -31,7 +36,7 @@ void Graphnested::set_pars_d(std::vector<double > n){
 }
 
 bool Graphnested::suitable_mark(int i){
-  return end(pars_i) != std::find(begin(pars_i), end(pars_i), x->getType(&i));
+  return pars_i.end() != std::find(pars_i.begin(), pars_i.end(), x->getType(&i));
 }
 /********************************************************************************************/
 void Graphnested::compute_edges() {
@@ -74,9 +79,9 @@ void Graphnested::update_edges_after_addition(){
   // assume the last point of the pattern is the point
   int j,k, i = x->size()-1;
   double d;
-
   // add to nodelists
   for(k = 0; k < r.size(); k++) nodes.at(k).push_back(new Node());
+
   // check the relations
   for(j = 0; j < i; j++) if(pair_suitable(i,j)) { // go through the old points
     d = x->getDist(&i, &j);
@@ -92,6 +97,88 @@ void Graphnested::update_edges_after_addition(){
     }
   }
 }
+
+/********************************************************************************************/
+void Graphnested::update_edges_after_addition_stored() {
+  if(is_empty) return;
+  // assume the last point of the pattern is the point
+  int j,k, i = x->size()-1;
+  double d;
+  // add the new point to nodelists
+  for(k = 0; k < r.size(); k++) nodes.at(k).push_back(new Node());
+  int ij;
+  // check the relations, just close by is enough
+  for(ij = 0; ij < last_points_max_range_neighbours.size(); ij++) {
+    j = last_points_max_range_neighbours.at(ij);
+    if(pair_suitable(i,j)) { // go through the old points
+      d = x->getDist(&i, &j);
+      //go forwards in ranges.
+      if(d < maxR){
+        for(k=0; k < r.size(); k++) {
+          if(d < r.at(k)) {
+            break; // found the interval.
+          }
+          nodes.at(k).at(i)->add_neighbour( nodes.at(k).at(j) );
+          nodes.at(k).at(j)->add_neighbour( nodes.at(k).at(i) );
+        }
+      }
+    }
+  }
+}
+/********************************************************************************************/
+void Graphnested::store_last_points_potential_neighbours() {
+  // compute the potential neighbours of the last point:
+  last_points_max_range_neighbours.clear();
+  int j,i = x->size()-1;
+
+  for(j=0; j < i; j++) if(x->getDist(&j, &i) < maxR) last_points_max_range_neighbours.push_back(j);
+}
+
+void Graphnested::set_last_points_potential_neighbours(std::vector<int> these){
+  // make sure we don't add any extra
+  last_points_max_range_neighbours.resize(these.size());
+//  int j,ij, i=x->size()-1;
+//  for(ij=0; ij<these.size(); ij++) {
+//    j = these.at(ij);
+//    if(x->getDist(&i,&j) < maxR)
+    for(int ij=0; ij < these.size(); ij++)  last_points_max_range_neighbours.at(ij) = these.at(ij);
+  //}
+}
+
+/********************************************************************************************/
+void Graphnested::update_edges_after_mark_change() {
+  if(is_empty) return;
+  // assume the last point of the pattern is the point
+  int j,k, i = x->size()-1;
+  double d;
+  // basically kill the node and then re-add
+  for(int k = 0; k < r.size(); k++) {
+    // if we have neighbours
+    if(nodes.at(k).at(i)->neighbour_count()>0){
+      nodes.at(k).at(i)->kill_me();
+      nodes.at(k).erase(nodes.at(k).begin() + i);
+      nodes.at(k).push_back(new Node);
+    }
+  }
+  // so we just update the neighbourhoods after the mark of i has changed
+  for(int ij = 0; ij < last_points_max_range_neighbours.size(); ij++) {
+    j = last_points_max_range_neighbours.at(ij);
+    if(pair_suitable(i,j)) { // go through the old points
+      d = x->getDist(&i, &j);//
+      if(d < maxR){
+        //go forwards in ranges
+        for(k=0; k < r.size(); k++) {
+          if(d < r.at(k)) {
+            break; // found the interval.
+          }
+        }
+        nodes.at(k).at(i)->add_neighbour( nodes.at(k).at(j) );
+        nodes.at(k).at(j)->add_neighbour( nodes.at(k).at(i) );
+      }
+    }
+  }
+}
+
 
 /********************************************************************************************/
 void Graphnested::update_edges_after_move(int *i){

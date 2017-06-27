@@ -17,8 +17,8 @@ toroidal <- 1
 
 out <-  stepper_components(
   xy, grid,
-  R, K,
-  bbox,
+  R, K, sat=rep(1,K),
+  bbox=bbox,
   dbg = 0,
   toroidal = toroidal)
 
@@ -37,14 +37,14 @@ for(k in 1:K) {
 
 outx <-  stepper_components(
   xy, to = NULL,
-  R, K,
-  bbox,
+  R, K, sat=rep(1,K),
+  bbox=bbox,
   dbg = 0,
   toroidal = toroidal)
 
 k <-2
 image(xs,xs,asm(k), col=gray.colors(120, 0), zlim=c(0, max(out)), asp=1)
-points(xy, pch=3, col=-outx[,k]+1)
+points(xy, pch=3, col=outx[,k]+1)
 symbols(xy, inches=F, add=T, circles=rep(r[k], nrow(xy)), fg=rgb(0,0,0,0.5))
 
 

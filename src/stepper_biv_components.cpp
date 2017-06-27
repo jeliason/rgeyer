@@ -149,31 +149,25 @@ NumericMatrix rstepper_biv_components_at_data_c(
   for(j = 0; j < x.size(); j++)
     for(k = 0; k < K; k++)
       original_factors(j, k) = imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k, j));
-                                //graphs.has_neighbours_i_in_graph_k(k, j);
 
   /* here begins the evaluation */
   int counts_ij;
   // the main loop
   for(i = 0; i < from.nrow(); i++ ) {
     for(k = 0; k < K; k++) {
-      change = -imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,i));//-graphs.has_neighbours_i_in_graph_k(k, i); // the old point
+      change = 0;//-imin(sat(k), graphs.neighbour_count_of_i_in_graph_k(k,i));// the old point
       for(j = 0; j < graphs.neighbour_count_of_i_in_graph_k(k, i); j++) { // check if the removal of this point makes a difference
         // count should be between 0<count<=sat to make a difference
         counts_ij = graphs.neighbour_count_of_neighbour_j_of_i_in_graph_k(k, i, j);
-        if(counts_ij > 0 & counts_ij <= sat(k)) change--;
+        if(counts_ij > 0 & counts_ij <= sat(k)) change++;
       }
-      // change = -graphs.has_neighbours_i_in_graph_k(k, i); // the old point
-      // for(j = 0; j < graphs.neighbour_count_of_i_in_graph_k(k, i); j++) { // check if the point is the only neighbour
-      //   if(graphs.neighbour_count_of_neighbour_j_of_i_in_graph_k(k, i, j) == 1) change--;
-      // }
-      components(i,k) = change;
+      components(i,k) = original_factors(i,k) + change;
     }
 
     if(dbg) {
       Rprintf("       \r[%i/%i]", i+1, x.size());
     }
   }// eof mainloop
-
 
   if(dbg) Rprintf("\n");
   return components;

@@ -4,7 +4,7 @@
 \alias{stepper_biv_components}
 \title{Compute the components of papangelou for the bivariate stepper model}
 \usage{
-stepper_biv_components(from, to, r, sat, bbox, dbg = 0, toroidal = 0)
+stepper_biv_components(from, to, r, sat, bbox, dbg = 0, toroidal = 0, ...)
 }
 \arguments{
 \item{from}{coordinates of the data, third column 0/1 marks}
@@ -13,13 +13,15 @@ stepper_biv_components(from, to, r, sat, bbox, dbg = 0, toroidal = 0)
 
 \item{r}{alternative to K and R, the r vector itself. Increasing, 0 shouldn't be included.}
 
-\item{sat}{saturation levels, vector if integers > 0}
+\item{sat}{saturation levels, vector if integers > 0.}
 
 \item{bbox}{bounding box}
 
 \item{dbg}{dbg level}
 
 \item{toroidal}{>0 use toroidal distances}
+
+\item{...}{ignored}
 }
 \value{
 Matrix with dimension (nrow(to), K) with
@@ -28,6 +30,5 @@ d_k(to_i|from) = min(sat_k, ne_k(to_i, from[!mark_i])) with ne_k(to_i, from[!mar
 If 'to' is NULL, computes the components for 'from' locations, i.e. the papangelou for each data point.
 }
 \description{
-Compute the components of papangelou for the bivariate stepper model
+Nested K annuli of interactions.
 }
-

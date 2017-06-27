@@ -9,6 +9,7 @@
 #' @param bbox bounding box
 #' @param dbg dbg level
 #' @param toroidal >0 use toroidal distances
+#' @param ... ignored
 #'
 #' @return Matrix with dimension (nrow(to), K) with
 #' d_k(to_i|from) = min(sat_k, ne_k(to_i, from[!mark_i])) with ne_k(to_i, from[!mark_i]) = sum_j 1(mark_j!=mark_i)(r[k-1] < ||to_i - from_j|| < r[k])
@@ -18,7 +19,7 @@
 #' @useDynLib rgeyer
 
 
-stepper_biv_components <- function(from, to, r, sat, bbox, dbg=0, toroidal=0){
+stepper_biv_components <- function(from, to, r, sat, bbox, dbg=0, toroidal=0, ...){
   if(missing(r)) r <- (1:K) * R /K
   if(is.null(to) | missing(to)){
     rstepper_biv_components_at_data_c(

@@ -63,4 +63,3 @@ y <- rstepper_multi(n=nvec, theta1, theta2, iter = 1e5, dbg=200, toroidal=T, bbo
 plot(y[,-3], col=y[,3]+1, pch=1+2*y[,3], cex=.5, asp=1)
 
 }
-

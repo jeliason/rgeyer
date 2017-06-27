@@ -6,7 +6,8 @@ load_all(".")
 
 set.seed(1)
 L <- 10
-xy <- matrix(runif(40, 0, L),ncol=2)
+p <- 3
+xy <- matrix(runif(2*p*20, 0, L),ncol=2)
 # mark
 m <- sample(0:1, replace=T, nrow(xy))
 xym <- cbind(xy, m)
@@ -22,9 +23,8 @@ toroidal <- 1
 gridm <- cbind(grid, 0)
 
 out <-  stepper_biv_components(
-  xym, gridm,
-  R, K,
-  bbox,
+  xym, gridm, r = r, sat = rep(1,K),
+  bbox=bbox,
   dbg = 0,
   toroidal = toroidal)
 

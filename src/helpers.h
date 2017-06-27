@@ -15,3 +15,5 @@ double potential_multi(Pplite *x,
                        std::vector<std::vector<int > > * saturations2,
                        std::vector<Graphnested *> *graphs1,
                        std::vector<Graphnested *> *graphs2);
+
+double maxv(std::vector<double> v);

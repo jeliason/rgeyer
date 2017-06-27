@@ -32,7 +32,7 @@ double Pplite::getX(int *i) { return x.at(*i);} ;
 double Pplite::getY(int *i) { return y.at(*i);} ;
 double Pplite::getZ(int *i) { return z.at(*i);} ;
 int    Pplite::getType(int *i) { return type.at(*i);} ;
-
+void   Pplite::setType(int *i, int m) { type.at(*i) = m;} ;
 bool Pplite::sameType(int *i, int *j) { return type.at(*i) == type.at(*j); } ;
 
 /********************************************************************************************/

@@ -34,6 +34,7 @@ public:
   double getY(int *);
   double getZ(int *);
   int getType(int *);
+  void setType(int *i, int m);
 
   bool sameType(int *i, int *j);
 

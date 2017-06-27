@@ -1,4 +1,6 @@
-#' Compute the components of papangelou for the stepper model
+#' Compute the components of papangelou for the stepper model, from a grid to data
+#'
+#' Will compute the components from all grid points to data, for each type of grid point.
 #'
 #' @param from coordinates of the data
 #' @param to coordinate matrix for locations for evaluation of papangelou. Assumed to be different from 'from'
@@ -18,25 +20,15 @@
 #' @export
 #' @useDynLib rgeyer
 
-stepper_components <- function(from, to, R, K, r, sat, bbox, dbg=0, toroidal=0, ...){
-  if(missing(r)) r <- (1:K) * R /K
-  if(is.null(to) | missing(to)){
-    rstepper_components_at_data_c(
+stepper_multi_components_grid <- function(from, to, ranges1, ranges2, sat1, sat2, bbox, dbg=0, toroidal=0, ...){
+    rstepper_components_multi_grid_c(
       from,
-      r,
-      sat,
+      to,
+      ranges1,
+      ranges2,
+      sat1,
+      sat2,
       bbox,
       dbg,
       toroidal)
-  }
-  else{
-  rstepper_components_c(
-    from,
-    to,
-    r,
-    sat,
-    bbox,
-    dbg,
-    toroidal)
-  }
 }

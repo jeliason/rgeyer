@@ -5,7 +5,7 @@
 \title{Compute the papangelou conditional intensity for the multivariate stepper model}
 \usage{
 stepper_multi_log_papangelou(from, to, theta1, theta2, bbox, dbg = 0,
-  toroidal = 0)
+  toroidal = 0, multi_to = FALSE)
 }
 \arguments{
 \item{from}{coordinates of the data, 3rd column 0-based integer marks}
@@ -21,10 +21,14 @@ stepper_multi_log_papangelou(from, to, theta1, theta2, bbox, dbg = 0,
 \item{dbg}{dbg level}
 
 \item{toroidal}{>0 use toroidal distances}
+
+\item{multi_to}{If TRUE, treat 'to' as unmarked locations at which to evaluate the papangelou for each mark level.}
 }
 \value{
 log-conditional intensity l(to_i|from) = theta[0] + sum( theta[k] * d_k(to_i,from) )
 where d_k(to_i|from) = 1( ne_k(to_i, from)>0) and ne_k(x,from) = sum_j 1(r[k-1] < ||to_i - from_j|| < r[k])
+
+If multi_to = TRUE, a matrix with each column corresponding to each mark level.
 }
 \description{
 Compute the papangelou conditional intensity for the multivariate stepper model
@@ -32,4 +36,3 @@ Compute the papangelou conditional intensity for the multivariate stepper model
 \details{
 The first order effects (trends, baselines) are not included, make sure add them afterwards.
 }
-

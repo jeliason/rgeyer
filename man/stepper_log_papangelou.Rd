@@ -30,4 +30,3 @@ where d_k(to_i|from) = 1( ne_k(to_i, from)>0) and ne_k(x,from) = sum_j 1(r[k-1] 
 \description{
 Compute the papangelou conditional intensity for the stepper model
 }
-

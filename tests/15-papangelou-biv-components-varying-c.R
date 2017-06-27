@@ -72,3 +72,4 @@ for(k in 1:K) {
   text(xy, labels = 1:nrow(xy), col=m+1)
 }
 
+

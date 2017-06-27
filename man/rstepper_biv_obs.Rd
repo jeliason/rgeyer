@@ -32,4 +32,3 @@ Symmetric interaction weights
 \details{
 the steps will be (1:K)*R/K. 0 will be the beginning of the first interval, so theta[2] is mapped to range (0,r[1]).
 }
-

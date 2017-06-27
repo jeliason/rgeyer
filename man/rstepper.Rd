@@ -39,4 +39,3 @@ Simulate Geyer's saturation with K different annulus and saturation fixed to 1.
 If r not given, the steps will be (1:K)*R/K. 0 will be the beginning of the first interval, so theta[2] is mapped to range (0,r[1]).
 If trend is given, it should be a 'spatstat' im-object covering the bbox. Will not be checked (at the moment).
 }
-

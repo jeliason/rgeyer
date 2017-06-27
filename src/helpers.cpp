@@ -44,3 +44,10 @@ double potential_multi(Pplite *x, Rcpp::NumericVector theta0,
   }
   return pot;
 }
+
+
+double maxv(std::vector<double> v){
+  double R=0;
+  for(int i=0;i<v.size();i++)if(v.at(i)>R)R=v.at(i);
+  return R;
+}
