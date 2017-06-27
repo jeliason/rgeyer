@@ -170,23 +170,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rtest_classes_c
-NumericMatrix rtest_classes_c(NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal);
-RcppExport SEXP rgeyer_rtest_classes_c(SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
-    Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
-    Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type x0(x0SEXP);
-    Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
-    Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
-    rcpp_result_gen = Rcpp::wrap(rtest_classes_c(theta, r, bbox, iter, x0, dbg, toroidal));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rtest_classes_biv_c
 NumericMatrix rtest_classes_biv_c(NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal);
 RcppExport SEXP rgeyer_rtest_classes_biv_c(SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
@@ -201,6 +184,23 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
     Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
     rcpp_result_gen = Rcpp::wrap(rtest_classes_biv_c(theta, r, bbox, iter, x0, dbg, toroidal));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rtest_classes_c
+NumericMatrix rtest_classes_c(NumericVector theta, NumericVector r, NumericMatrix bbox, int iter, NumericMatrix x0, int dbg, int toroidal);
+RcppExport SEXP rgeyer_rtest_classes_c(SEXP thetaSEXP, SEXP rSEXP, SEXP bboxSEXP, SEXP iterSEXP, SEXP x0SEXP, SEXP dbgSEXP, SEXP toroidalSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type theta(thetaSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
+    Rcpp::traits::input_parameter< int >::type iter(iterSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type x0(x0SEXP);
+    Rcpp::traits::input_parameter< int >::type dbg(dbgSEXP);
+    Rcpp::traits::input_parameter< int >::type toroidal(toroidalSEXP);
+    rcpp_result_gen = Rcpp::wrap(rtest_classes_c(theta, r, bbox, iter, x0, dbg, toroidal));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -339,18 +339,6 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
-// rtest_im_c
-NumericVector rtest_im_c(List im, NumericMatrix x);
-RcppExport SEXP rgeyer_rtest_im_c(SEXP imSEXP, SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< List >::type im(imSEXP);
-    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rtest_im_c(im, x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // rtest_graph_c
 List rtest_graph_c(NumericMatrix x0, NumericMatrix bbox, NumericVector r);
 RcppExport SEXP rgeyer_rtest_graph_c(SEXP x0SEXP, SEXP bboxSEXP, SEXP rSEXP) {
@@ -361,6 +349,18 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericMatrix >::type bbox(bboxSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type r(rSEXP);
     rcpp_result_gen = Rcpp::wrap(rtest_graph_c(x0, bbox, r));
+    return rcpp_result_gen;
+END_RCPP
+}
+// rtest_im_c
+NumericVector rtest_im_c(List im, NumericMatrix x);
+RcppExport SEXP rgeyer_rtest_im_c(SEXP imSEXP, SEXP xSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< List >::type im(imSEXP);
+    Rcpp::traits::input_parameter< NumericMatrix >::type x(xSEXP);
+    rcpp_result_gen = Rcpp::wrap(rtest_im_c(im, x));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -375,8 +375,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"rgeyer_rstepper_multi_fixed_c", (DL_FUNC) &rgeyer_rstepper_multi_fixed_c, 8},
     {"rgeyer_rstepper_univ_c", (DL_FUNC) &rgeyer_rstepper_univ_c, 9},
     {"rgeyer_rstepper_univ_fixed_c", (DL_FUNC) &rgeyer_rstepper_univ_fixed_c, 10},
-    {"rgeyer_rtest_classes_c", (DL_FUNC) &rgeyer_rtest_classes_c, 7},
     {"rgeyer_rtest_classes_biv_c", (DL_FUNC) &rgeyer_rtest_classes_biv_c, 7},
+    {"rgeyer_rtest_classes_c", (DL_FUNC) &rgeyer_rtest_classes_c, 7},
     {"rgeyer_rstepper_biv_components_c", (DL_FUNC) &rgeyer_rstepper_biv_components_c, 7},
     {"rgeyer_rstepper_biv_components_at_data_c", (DL_FUNC) &rgeyer_rstepper_biv_components_at_data_c, 6},
     {"rgeyer_rstepper_components_c", (DL_FUNC) &rgeyer_rstepper_components_c, 7},
@@ -385,8 +385,8 @@ static const R_CallMethodDef CallEntries[] = {
     {"rgeyer_rstepper_multi_log_papangelou_grid_c", (DL_FUNC) &rgeyer_rstepper_multi_log_papangelou_grid_c, 8},
     {"rgeyer_rstepper_multi_log_papangelou_at_data_c", (DL_FUNC) &rgeyer_rstepper_multi_log_papangelou_at_data_c, 6},
     {"rgeyer_rstepper_log_papangelou_c", (DL_FUNC) &rgeyer_rstepper_log_papangelou_c, 8},
-    {"rgeyer_rtest_im_c", (DL_FUNC) &rgeyer_rtest_im_c, 2},
     {"rgeyer_rtest_graph_c", (DL_FUNC) &rgeyer_rtest_graph_c, 3},
+    {"rgeyer_rtest_im_c", (DL_FUNC) &rgeyer_rtest_im_c, 2},
     {NULL, NULL, 0}
 };
 

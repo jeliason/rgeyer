@@ -37,12 +37,12 @@ rstepper_univ_fixed_c <- function(n, theta, r, sat, bbox, iter, x0, dbg, toroida
     .Call('rgeyer_rstepper_univ_fixed_c', PACKAGE = 'rgeyer', n, theta, r, sat, bbox, iter, x0, dbg, toroidal, trend_im)
 }
 
-rtest_classes_c <- function(theta, r, bbox, iter, x0, dbg, toroidal) {
-    .Call('rgeyer_rtest_classes_c', PACKAGE = 'rgeyer', theta, r, bbox, iter, x0, dbg, toroidal)
-}
-
 rtest_classes_biv_c <- function(theta, r, bbox, iter, x0, dbg, toroidal) {
     .Call('rgeyer_rtest_classes_biv_c', PACKAGE = 'rgeyer', theta, r, bbox, iter, x0, dbg, toroidal)
+}
+
+rtest_classes_c <- function(theta, r, bbox, iter, x0, dbg, toroidal) {
+    .Call('rgeyer_rtest_classes_c', PACKAGE = 'rgeyer', theta, r, bbox, iter, x0, dbg, toroidal)
 }
 
 rstepper_biv_components_c <- function(from, to, r, sat, bbox, dbg, toroidal) {
@@ -77,11 +77,11 @@ rstepper_log_papangelou_c <- function(from, to, theta, r, sat, bbox, dbg, toroid
     .Call('rgeyer_rstepper_log_papangelou_c', PACKAGE = 'rgeyer', from, to, theta, r, sat, bbox, dbg, toroidal)
 }
 
-rtest_im_c <- function(im, x) {
-    .Call('rgeyer_rtest_im_c', PACKAGE = 'rgeyer', im, x)
-}
-
 rtest_graph_c <- function(x0, bbox, r) {
     .Call('rgeyer_rtest_graph_c', PACKAGE = 'rgeyer', x0, bbox, r)
+}
+
+rtest_im_c <- function(im, x) {
+    .Call('rgeyer_rtest_im_c', PACKAGE = 'rgeyer', im, x)
 }
 
