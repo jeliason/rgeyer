@@ -1,6 +1,0 @@
-# Todo:
-
-* univ simulation D
-* lambda(u|x) D
-* biv simulation D
-* lambda(u|x) kerrokset ilman kertoimia D

@@ -71,7 +71,7 @@ void print_input_parameters(std::vector<std::vector<double > > * ranges1,
   for(i=0; i < npairs; i++){
     Rprintf("%i-%i: ", pairs(i,0), pairs(i,1));
     for(j = 0; j < saturations2->at(i).size(); j ++){
-      Rprintf("%f ", saturations2->at(i).at(j));
+      Rprintf("%i ", saturations2->at(i).at(j));
     }
     Rprintf("\n");
   }
