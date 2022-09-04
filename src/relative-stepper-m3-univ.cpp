@@ -55,10 +55,10 @@ NumericMatrix rrelativestepper_m3_univ_c(NumericVector theta,
   // Annuli areas
   std::vector<double > Ak(K); // divide by area already here
   std::vector<int > sat(K);
-  Ak.at(0) = r.at(0) * r.at(0) * PI / Area;
+  Ak.at(0) = r.at(0) * r.at(0) * M_PI / Area;
   sat.at(0) = roundup(Ak.at(0) * x.size());
   for(i=1; i < K; i++) {
-    Ak.at(i) = (pow(r.at(i),2)-pow(r.at(i-1),2)) * PI / Area;
+    Ak.at(i) = (pow(r.at(i),2)-pow(r.at(i-1),2)) * M_PI / Area;
     sat.at(i) = roundup(Ak.at(i) * x.size());
   }
 
